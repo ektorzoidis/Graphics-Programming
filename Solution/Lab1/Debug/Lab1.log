@@ -1,0 +1,15 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Lab2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  MainGame.cpp
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(17,10): warning C4930: 'Texture texture(void)': prototyped function not called (was a variable definition intended?)
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(14,9): warning C4930: 'Shader rimShader(void)': prototyped function not called (was a variable definition intended?)
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(15,9): warning C4930: 'Shader geoShader(void)': prototyped function not called (was a variable definition intended?)
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(13,9): warning C4930: 'Shader toonShader(void)': prototyped function not called (was a variable definition intended?)
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(12,9): warning C4930: 'Shader fogShader(void)': prototyped function not called (was a variable definition intended?)
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(18,10): warning C4930: 'Texture texture1(void)': prototyped function not called (was a variable definition intended?)
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(311,22): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(313,22): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(316,21): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(318,21): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(321,22): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+E:\University\Graphics Programming\Coursework\Lab8Starter\Lab1\MainGame.cpp(323,22): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+  Lab1.vcxproj -> E:\University\Graphics Programming\Coursework\Lab8Starter\Debug\Lab1.exe
