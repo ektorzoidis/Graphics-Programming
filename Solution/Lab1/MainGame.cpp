@@ -38,15 +38,20 @@ void MainGame::initSystems()
 	sphere.loadModel("..\\res\\Sphere.obj");
 	owl.loadModel("..\\res\\Owl.obj");
 	lion.loadModel("..\\res\\Lion.obj");
+	ball.loadModel("..\\res\\Ball.obj");
+	platform.loadModel("..\\res\\Platform.obj");
 	// Load shaders
 	eMapping.init("..\\res\\shaderReflection.vert", "..\\res\\shaderReflection.frag");
 	glowShader.init("..\\res\\glow.vert", "..\\res\\glow.frag");
 	lavaShader.init("..\\res\\lava.vert", "..\\res\\lava.frag");
+	marbleShader.init("..\\res\\marble.vert", "..\\res\\marble.frag");
+	darkMarbleShader.init("..\\res\\darkMarble.vert", "..\\res\\darkMarble.frag");
 	geoShader.initGeo();
 	// Load textures
 	wood.init("..\\res\\owl.jpg");
 	lava.init("..\\res\\lava.png");
-	normal.init("..\\res\\normal.jpg");
+	normal1.init("..\\res\\normal.jpg");
+	normal2.init("..\\res\\normal.png");
 	sky.init("..\\res\\sky.jpg");
 
 	// Initialise camera
@@ -92,62 +97,62 @@ void MainGame::processInput()
 	{
 		switch (evnt.type)
 		{
-		case SDL_MOUSEBUTTONDOWN:
-			break;
-			// On key pressed
-		case SDL_KEYDOWN:
-			switch (evnt.key.keysym.sym)
-			{
-				// A pressed
-			case SDLK_a:
-				myCamera.MoveRight(speed);
-				break;
-				// D pressed
-			case SDLK_d:
-				myCamera.MoveRight(-speed);
-				break;
-				// W pressed
-			case SDLK_w:
-				myCamera.MoveForward(speed);
-				break;
-				// S pressed
-			case SDLK_s:
-				myCamera.MoveForward(-speed);
-				break;
-				// E pressed
-			case SDLK_e:
-				myCamera.RotateY(-speed / 2);
-				break;
-				// Q pressed
-			case SDLK_q:
-				myCamera.RotateY(speed / 2);
-				break;
-				// Z pressed
-			case SDLK_z:
-				myCamera.Pitch(-speed);
-				break;
-				// X pressed
-			case SDLK_x:
-				myCamera.Pitch(speed);
-				break;
-			}
-			break;
-			// On mouse wheel
-		case SDL_MOUSEWHEEL:
-			// Scroll up
-			if (evnt.wheel.y > 0)
-			{
-				myCamera.MoveForward(speed);
-				break;
-			}
-			// Scroll down
-			else if (evnt.wheel.y < 0)
-			{
-				myCamera.MoveForward(-speed);
-				break;
-			}
-			break;
-			// On quit
+		//case SDL_MOUSEBUTTONDOWN:
+		//	break;
+		//// On key pressed
+		//case SDL_KEYDOWN:
+		//	switch (evnt.key.keysym.sym)
+		//	{
+		//		// A pressed
+		//	case SDLK_a:
+		//		myCamera.MoveRight(speed);
+		//		break;
+		//		// D pressed
+		//	case SDLK_d:
+		//		myCamera.MoveRight(-speed);
+		//		break;
+		//		// W pressed
+		//	case SDLK_w:
+		//		myCamera.MoveForward(speed);
+		//		break;
+		//		// S pressed
+		//	case SDLK_s:
+		//		myCamera.MoveForward(-speed);
+		//		break;
+		//		// E pressed
+		//	case SDLK_e:
+		//		myCamera.RotateY(-speed / 2);
+		//		break;
+		//		// Q pressed
+		//	case SDLK_q:
+		//		myCamera.RotateY(speed / 2);
+		//		break;
+		//		// Z pressed
+		//	case SDLK_z:
+		//		myCamera.Pitch(-speed);
+		//		break;
+		//		// X pressed
+		//	case SDLK_x:
+		//		myCamera.Pitch(speed);
+		//		break;
+		//	}
+		//	break;
+		//// On mouse wheel
+		//case SDL_MOUSEWHEEL:
+		//	// Scroll up
+		//	if (evnt.wheel.y > 0)
+		//	{
+		//		myCamera.MoveForward(speed);
+		//		break;
+		//	}
+		//	// Scroll down
+		//	else if (evnt.wheel.y < 0)
+		//	{
+		//		myCamera.MoveForward(-speed);
+		//		break;
+		//	}
+		//	break;
+		// On quit
 		case SDL_QUIT:
 			_gameState = GameState::EXIT;
 			break;
@@ -194,7 +199,7 @@ void MainGame::linkEmapping()
 	glUniform1i(t1L, 1);
 }
 
-void MainGame::linkLava()
+void MainGame::linkLava(bool change)
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -214,7 +219,10 @@ void MainGame::linkLava()
 	glBindTexture(GL_TEXTURE_2D, lava.getID());
 	glUniform1i(t1L, 0);
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, normal.getID());
+	if (change)
+		glBindTexture(GL_TEXTURE_2D, normal1.getID());
+	else
+		glBindTexture(GL_TEXTURE_2D, normal2.getID());
 	glUniform1i(t2L, 1);
 }
 
@@ -273,10 +281,40 @@ void MainGame::drawGame()
 	// Update collision
 	owl.updateSphereData(*transform2.GetPos(), 0.62f);
 
+	//---------------Marble shader---------------
+	// Set marble shader
+	marbleShader.Bind();
+	linkLava(false);
+	// Set transform
+	transform3.SetPos(glm::vec3(0.0, 5.0 + lionPos, 0.0));
+	transform3.SetRot(glm::vec3(0.0, counter * 1.2, 0.0));
+	transform3.SetScale(glm::vec3(1.5, 1.5, 1.5));
+	// Update shader
+	marbleShader.Update(transform3, myCamera);
+	// Draw mesh
+	lion.draw();
+	// Update collision
+	lion.updateSphereData(*transform3.GetPos(), 0.62f);
+
+	//---------------Dark Marble shader---------------
+	// Set marble shader
+	darkMarbleShader.Bind();
+	linkLava(true);
+	// Set transform
+	transform3.SetPos(glm::vec3(0.0, 5.0 + lionPos, 0.0));
+	transform3.SetRot(glm::vec3(0.0, counter * 1.2, 0.0));
+	transform3.SetScale(glm::vec3(1.5, 1.5, 1.5));
+	// Update shader
+	darkMarbleShader.Update(transform3, myCamera);
+	// Draw mesh
+	platform.draw();
+	// Update collision
+	platform.updateSphereData(*transform3.GetPos(), 0.62f);
+
 	//---------------Lava shader---------------
 	// Set lava shader
 	lavaShader.Bind();
-	linkLava();
+	linkLava(true);
 	// Set transform
 	transform3.SetPos(glm::vec3(0.0, 5.0 + lionPos, 0.0));
 	transform3.SetRot(glm::vec3(0.0, counter * 1.2, 0.0));
@@ -284,9 +322,9 @@ void MainGame::drawGame()
 	// Update shader
 	lavaShader.Update(transform3, myCamera);
 	// Draw mesh
-	lion.draw();
+	ball.draw();
 	// Update collision
-	lion.updateSphereData(*transform3.GetPos(), 0.62f);
+	ball.updateSphereData(*transform3.GetPos(), 0.62f);
 
 	//---------------Glow shader---------------
 	// Set glow shader
@@ -295,13 +333,13 @@ void MainGame::drawGame()
 	// Set transform
 	transform4.SetPos(glm::vec3(0.0, 5.0 + lionPos, 0.05));
 	transform4.SetRot(glm::vec3(0.0, counter * 1.2, 0.0));
-	transform4.SetScale(glm::vec3(1.6, 1.6, 1.6));
+	transform4.SetScale(glm::vec3(1.55, 1.55, 1.55));
 	// Update shader
 	glowShader.Update(transform4, myCamera);
 	// Draw mesh
-	lion.draw();
+	ball.draw();
 	// Update collision
-	lion.updateSphereData(*transform4.GetPos(), 0.62f);
+	ball.updateSphereData(*transform4.GetPos(), 0.62f);
 
 	//---------------Movement---------------
 	// Update counter

@@ -115,5 +115,17 @@
     <None Include="..\res\Lava.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\res\Marble.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Marble.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\DarkMarble.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\DarkMarble.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

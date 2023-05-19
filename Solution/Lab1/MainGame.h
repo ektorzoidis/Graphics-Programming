@@ -27,7 +27,7 @@ private:
 	void drawGame();
 	void linkGeo();
 	void linkEmapping();
-	void linkLava();
+	void linkLava(bool change);
 	void linkGlow();
 	bool collision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
 
@@ -35,11 +35,11 @@ private:
 
 	Display _gameDisplay;
 	GameState _gameState;
-	Mesh plane, cube, sphere, owl, lion;
+	Mesh plane, cube, sphere, owl, lion, ball, platform;
 	Transform transform1, transform2, transform3, transform4;
 	Camera myCamera;
-	Shader geoShader, shaderSkybox, eMapping, glowShader, lavaShader;
-	Texture wood, lava, normal, sky;
+	Shader geoShader, shaderSkybox, eMapping, glowShader, lavaShader, marbleShader, darkMarbleShader;
+	Texture wood, lava, normal1, normal2, sky;
 	
 	Skybox skybox;
 	vector<std::string> faces;

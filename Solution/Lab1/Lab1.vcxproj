@@ -98,10 +98,14 @@
     <ClInclude Include="transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\res\DarkMarble.frag" />
+    <None Include="..\res\DarkMarble.vert" />
     <None Include="..\res\Glow.frag" />
     <None Include="..\res\Glow.vert" />
     <None Include="..\res\Lava.frag" />
     <None Include="..\res\Lava.vert" />
+    <None Include="..\res\Marble.frag" />
+    <None Include="..\res\Marble.vert" />
     <None Include="..\res\shaderGeoText.frag" />
     <None Include="..\res\shaderGeoText.geom" />
     <None Include="..\res\shaderGeoText.vert" />

@@ -31,6 +31,7 @@ float whiteNoise2x1(vec2 p)
     random = random * 43758.5453;
     random = fract(random);
     return random;
+    return p.x;
 }
 
 float valueNoiseFn(vec2 uv) {
@@ -190,7 +191,7 @@ void main()
     vec3 ambient = vec3(0.5, 0.5, 0.5);
 
     // Diffuse lighting
-    vec3 diffuseNormal = texture(normal, vert_In.tC + (time * 0.02)).rgb;
+    vec3 diffuseNormal = normalize(texture(normal, vert_In.tC + (time * 0.02)).rgb);
 	diffuseNormal = normalize(diffuseNormal * 2.0 - 1.0); 
     vec3 lightColour = vec3(1.0, 0.7, 0.2);
     vec3 lightPos = vec3(5.0, 5.0, -5.0);
